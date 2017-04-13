@@ -9,7 +9,7 @@ public class MySolution {
 		int[] values = { 5, 6, 3, 1, 2, 4 };
 		int n = 6;
 		int node1 = 2;
-		int node2 = 6;
+		int node2 = 4;
 
 		MySolution ms = new MySolution();
 		int distance = ms.calculateDistance(values, n, node1, node2);
@@ -56,17 +56,22 @@ public class MySolution {
 		int distance = 0;
 		boolean distanceFound = false;
 
-		for (int i = 0; i < fromNodeParentList.size(); i++) {
-			for (int j = 0; j < toNodeParentList.size(); j++) {
-				if (fromNodeParentList.get(i).value == toNodeParentList.get(j).value) {
-					distance = i + j;
-					distanceFound = true;
+		if (fromNodeParentList != null && toNodeParentList != null) {
+
+			for (int i = 0; i < fromNodeParentList.size(); i++) {
+				for (int j = 0; j < toNodeParentList.size(); j++) {
+					if (fromNodeParentList.get(i).value == toNodeParentList
+							.get(j).value) {
+						distance = i + j;
+						distanceFound = true;
+						break;
+					}
+				}
+				if (distanceFound) {
 					break;
 				}
 			}
-			if (distanceFound) {
-				break;
-			}
+
 		}
 
 		return distance;
