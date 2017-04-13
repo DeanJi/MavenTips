@@ -6,18 +6,18 @@ public class MySolution {
 
 	public static void main(String[] args) {
 
-		Integer[] values = { 5, 6, 3, 1, 2, 4 };
+		int[] values = { 5, 6, 3, 1, 2, 4 };
 		int n = 6;
-		int n1 = 2;
-		int n2 = 4;
+		int node1 = 2;
+		int node2 = 6;
 
 		MySolution ms = new MySolution();
-		int distance = ms.calculateDistince(values, n, n1, n2);
+		int distance = ms.calculateDistance(values, n, node1, node2);
 		System.out.println(distance);
 
 	}
 
-	int calculateDistince(Integer[] values, int n, int n1, int n2) {
+	int calculateDistance(int[] values, int n, int node1, int node2) {
 
 		int distance = -1;
 
@@ -30,19 +30,19 @@ public class MySolution {
 				root = node.addNode(values[i], root);
 			}
 
-			Node node1 = node.findNode(n1, root);
-			Node node2 = node.findNode(n2, root);
+			Node fromNode = node.findNode(node1, root);
+			Node toNode = node.findNode(node2, root);
 
-			if (node1 != null && node2 != null) {
-				ArrayList<Node> node1ParentList = new ArrayList<Node>();
-				node1ParentList.add(node1);
-				node.generateParentList(node1, node1ParentList);
+			if (fromNode != null && toNode != null) {
+				ArrayList<Node> fromNodeParentList = new ArrayList<Node>();
+				fromNodeParentList.add(fromNode);
+				node.generateParentList(fromNode, fromNodeParentList);
 
-				ArrayList<Node> node2ParentList = new ArrayList<Node>();
-				node2ParentList.add(node2);
-				node.generateParentList(node2, node2ParentList);
+				ArrayList<Node> toNodeParentList = new ArrayList<Node>();
+				toNodeParentList.add(toNode);
+				node.generateParentList(toNode, toNodeParentList);
 
-				distance = findDistance(node1ParentList, node2ParentList);
+				distance = findDistance(fromNodeParentList, toNodeParentList);
 			}
 		}
 
@@ -50,15 +50,15 @@ public class MySolution {
 
 	}
 
-	int findDistance(ArrayList<Node> node1ParentList,
-			ArrayList<Node> node2ParentList) {
+	int findDistance(ArrayList<Node> fromNodeParentList,
+			ArrayList<Node> toNodeParentList) {
 
 		int distance = 0;
 		boolean distanceFound = false;
 
-		for (int i = 0; i < node1ParentList.size(); i++) {
-			for (int j = 0; j < node2ParentList.size(); j++) {
-				if (node1ParentList.get(i).value == node2ParentList.get(j).value) {
+		for (int i = 0; i < fromNodeParentList.size(); i++) {
+			for (int j = 0; j < toNodeParentList.size(); j++) {
+				if (fromNodeParentList.get(i).value == toNodeParentList.get(j).value) {
 					distance = i + j;
 					distanceFound = true;
 					break;
@@ -110,14 +110,16 @@ public class MySolution {
 			return null;
 		}
 
-		ArrayList<Node> generateParentList(Node node, ArrayList<Node> list) {
+		void generateParentList(Node node, ArrayList<Node> parentList) {
 
+			if (parentList == null) {
+				parentList = new ArrayList<Node>();
+			}
 			if (node != null && node.parent != null) {
-				list.add(node.parent);
-				generateParentList(node.parent, list);
+				parentList.add(node.parent);
+				generateParentList(node.parent, parentList);
 			}
 
-			return list;
 		}
 	}
 }
