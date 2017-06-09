@@ -1,1 +1,3 @@
 C:\WebSphereV8.5\AppServer\profiles\AppSrv01\config\cells\DeanXPSNode01Cell\security.xml
+
+C:\WebSphereV8.5\AppServer\plugins\com.ibm.ws.runtime.jar
